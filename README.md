@@ -69,13 +69,6 @@ O frontend ficará disponível em http://localhost:5173
 
 ---
 
-## 💡 Frases de Impacto para Destacar o Projeto
-- O app foi pensado para ser simples, bonito e eficiente, focado na experiência do colaborador.
-- A tecnologia Vite acelera o desenvolvimento e torna o React ainda mais produtivo.
-- A arquitetura REST permite que o frontend e o backend evoluam de forma independente.
-
----
-
 ## 🖼️ Prints/Tela de Cada Página
 
 <p>Login:</p>
