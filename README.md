@@ -78,17 +78,17 @@ O frontend ficará disponível em http://localhost:5173
 
 ## 🖼️ Prints/Tela de Cada Página
 
-Login:
+<p>Login:</p>
 ![Login](prints/login.png)
-Dashboard:
+<p>Dashboard:</p>
 ![Dashboard](prints/dashboard.png)
-Calendário:
+<p>Calendário:</p>
 ![Calendário](prints/calendario.png)
-Tarefas:
+<p>Tarefas:</p>
 ![Tarefas](prints/tarefas.png)
-Notas:
+<p>Notas:</p>
 ![Notas](prints/notas.png)
-Perfil do Usuário:
+<p>Perfil do Usuário:</p>
 ![Perfil](prints/perfil.png)
 
 ---
