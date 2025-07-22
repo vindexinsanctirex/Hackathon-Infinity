@@ -76,14 +76,19 @@ O frontend ficará disponível em http://localhost:5173
 
 ---
 
-## 🖼️ Prints/Tela de Cada Página (Exemplo)
-> **Adicione aqui prints reais das principais telas do app:**
+## 🖼️ Prints/Tela de Cada Página
 
+Login:
 ![Login](prints/login.png)
+Dashboard:
 ![Dashboard](prints/dashboard.png)
+Calendário:
 ![Calendário](prints/calendario.png)
+Tarefas:
 ![Tarefas](prints/tarefas.png)
+Notas:
 ![Notas](prints/notas.png)
+Perfil do Usuário:
 ![Perfil](prints/perfil.png)
 
 ---
