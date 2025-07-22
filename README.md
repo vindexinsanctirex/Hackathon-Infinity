@@ -116,6 +116,29 @@ O frontend ficará disponível em http://localhost:5173
 └── ...
 ```
 
+Aqui estão **todas as bibliotecas (libs) usadas no projeto**, tanto no frontend quanto no backend:
+
+---
+
+## **Frontend (React)**
+- **react** (^19.1.0)
+- **react-dom** (^19.1.0)
+- **vite** (^7.0.4)
+- **@vitejs/plugin-react** (^4.6.0)
+- **eslint** (^9.30.1)
+- **@eslint/js** (^9.30.1)
+- **eslint-plugin-react-hooks** (^5.2.0)
+- **eslint-plugin-react-refresh** (^0.4.20)
+- **@types/react** (^19.1.8)
+- **@types/react-dom** (^19.1.6)
+- **globals** (^16.3.0)
+
+---
+
+## **Backend (Python)**
+- **flask**
+- **flask-cors**
+
 ---
 
 ## ℹ️ Sobre a pasta `node_modules`
