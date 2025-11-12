@@ -8,18 +8,14 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        
-      - name: Debug folder structure
-        run: |
-          echo "Current directory: $(pwd)"
-          echo "Folder contents:"
-          ls -la
-          echo "Frontend folder contents:"
-          ls -la frontend/
-        
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -27,21 +23,14 @@ jobs:
           
       - name: Install dependencies
         working-directory: ./frontend
-        run: |
-          npm install
-          # Install missing dependencies that your app uses
-          npm install date-fns
-          # Add any other missing dependencies here if needed
-          
-      - name: Build
+        run: npm install
+        
+      - name: Deploy
         working-directory: ./frontend
         run: |
-          VITE_API_URL=https://hackathon-infinity-backend.onrender.com npm run build
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          npm run deploy
         env:
           VITE_API_URL: https://hackathon-infinity-backend.onrender.com
-          
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./frontend/dist
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
