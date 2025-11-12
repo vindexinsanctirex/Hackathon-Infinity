@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { API_URL } from '../config';
 
 export default function Tasks({ userId, showToast }) {
   const [tasks, setTasks] = useState([]);
@@ -9,7 +10,7 @@ export default function Tasks({ userId, showToast }) {
 
   const fetchTasks = async () => {
     setLoading(true);
-    const res = await fetch(`http://127.0.0.1:5000/tasks?user_id=${userId}`);
+    const res = await fetch(`${API_URL}/tasks?user_id=${userId}`);
     const data = await res.json();
     setTasks(data);
     setLoading(false);
@@ -20,7 +21,7 @@ export default function Tasks({ userId, showToast }) {
   const addTask = async (e) => {
     e.preventDefault();
     try {
-      await fetch('http://127.0.0.1:5000/tasks', {
+      await fetch(`${API_URL}/tasks`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ user_id: userId, title, date, category })
@@ -35,7 +36,7 @@ export default function Tasks({ userId, showToast }) {
 
   const toggleCheck = async (task) => {
     try {
-      await fetch(`http://127.0.0.1:5000/tasks/${task.id}`, {
+      await fetch(`${API_URL}/tasks/${task.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...task, checked: task.checked ? 0 : 1 })
@@ -49,7 +50,7 @@ export default function Tasks({ userId, showToast }) {
 
   const removeTask = async (id) => {
     try {
-      await fetch(`http://127.0.0.1:5000/tasks/${id}`, { method: 'DELETE' });
+      await fetch(`${API_URL}/tasks/${id}`, { method: 'DELETE' });
       fetchTasks();
       showToast && showToast('Tarefa removida!', 'info');
     } catch {

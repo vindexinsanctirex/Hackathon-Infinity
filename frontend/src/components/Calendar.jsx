@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { addMonths, subMonths, startOfMonth, endOfMonth, startOfWeek, endOfWeek, addDays, format, isSameMonth, isSameDay } from 'date-fns';
+import { API_URL } from '../config';
 
 const categoryColors = {
   'Reunião': '#3949AB',
@@ -17,7 +18,7 @@ export default function Calendar({ userId }) {
   const [editTask, setEditTask] = useState(null);
 
   useEffect(() => {
-    fetch(`http://127.0.0.1:5000/tasks?user_id=${userId}`)
+    fetch(`${API_URL}/tasks?user_id=${userId}`)
       .then(res => res.json())
       .then(setTasks);
   }, [userId, showModal]);
@@ -110,7 +111,7 @@ export default function Calendar({ userId }) {
   };
 
   const handleCheck = async (task) => {
-    await fetch(`http://127.0.0.1:5000/tasks/${task.id}`, {
+    await fetch(`${API_URL}/tasks/${task.id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ ...task, checked: task.checked ? 0 : 1 })
@@ -121,7 +122,7 @@ export default function Calendar({ userId }) {
 
   const handleAddTask = async (e) => {
     e.preventDefault();
-    await fetch('http://127.0.0.1:5000/tasks', {
+    await fetch(`${API_URL}/tasks`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -153,7 +154,7 @@ export default function Calendar({ userId }) {
   };
 
   const handleDeleteTask = async (id) => {
-    await fetch(`http://127.0.0.1:5000/tasks/${id}`, { method: 'DELETE' });
+    await fetch(`${API_URL}/tasks/${id}`, { method: 'DELETE' });
     setShowModal(false);
     setTimeout(() => setShowModal(true), 100);
   };

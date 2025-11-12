@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { API_URL } from '../config';
 
 export default function Notes({ userId, showToast }) {
   const [notes, setNotes] = useState([]);
@@ -7,7 +8,7 @@ export default function Notes({ userId, showToast }) {
 
   const fetchNotes = async () => {
     setLoading(true);
-    const res = await fetch(`http://127.0.0.1:5000/notes?user_id=${userId}`);
+    const res = await fetch(`${API_URL}/notes?user_id=${userId}`);
     const data = await res.json();
     setNotes(data);
     setLoading(false);
@@ -18,7 +19,7 @@ export default function Notes({ userId, showToast }) {
   const addNote = async (e) => {
     e.preventDefault();
     try {
-      await fetch('http://127.0.0.1:5000/notes', {
+      await fetch(`${API_URL}/notes`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ user_id: userId, content, created_at: new Date().toISOString() })
@@ -35,7 +36,7 @@ export default function Notes({ userId, showToast }) {
     const newContent = prompt('Editar nota:', note.content);
     if (newContent !== null && newContent !== note.content) {
       try {
-        await fetch(`http://127.0.0.1:5000/notes/${note.id}`, {
+        await fetch(`${API_URL}/notes/${note.id}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ content: newContent, created_at: new Date().toISOString() })
@@ -50,7 +51,7 @@ export default function Notes({ userId, showToast }) {
 
   const removeNote = async (id) => {
     try {
-      await fetch(`http://127.0.0.1:5000/notes/${id}`, { method: 'DELETE' });
+      await fetch(`${API_URL}/notes/${id}`, { method: 'DELETE' });
       fetchNotes();
       showToast && showToast('Nota removida!', 'info');
     } catch {

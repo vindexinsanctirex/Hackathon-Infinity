@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { API_URL } from '../config';
 
 export default function Profile({ user, onBack, onUpdate }) {
   const [edit, setEdit] = useState(false);
@@ -20,7 +21,7 @@ export default function Profile({ user, onBack, onUpdate }) {
       setLoading(true);
       setError('');
       try {
-        const res = await fetch(`http://127.0.0.1:5000/user/${user.id}`);
+        const res = await fetch(`${API_URL}/user/${user.id}`);
         if (res.ok) {
           const data = await res.json();
           setForm({
@@ -53,7 +54,7 @@ export default function Profile({ user, onBack, onUpdate }) {
     setLoading(true);
     setError('');
     try {
-      const res = await fetch(`http://127.0.0.1:5000/user/${user.id}`, {
+      const res = await fetch(`${API_URL}/user/${user.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form)
