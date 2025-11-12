@@ -3,6 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [ main ]
+  workflow_dispatch:
 
 jobs:
   deploy:
@@ -11,26 +12,27 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         
-      - name: Debug files
+      - name: Debug folder structure
         run: |
-          ls -la
           echo "Current directory: $(pwd)"
-          
+          echo "Folder contents:"
+          ls -la
+          echo "Frontend folder contents:"
+          ls -la frontend/
+        
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18'
           
       - name: Install dependencies
-        run: |
-          npm install
-          ls -la node_modules | head -10
-          
+        working-directory: ./frontend
+        run: npm install
+        
       - name: Build
+        working-directory: ./frontend
         run: |
           VITE_API_URL=https://hackathon-infinity-backend.onrender.com npm run build
-          echo "Build completed - checking dist folder:"
-          ls -la dist/
         env:
           VITE_API_URL: https://hackathon-infinity-backend.onrender.com
           
@@ -38,4 +40,4 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+          publish_dir: ./frontend/dist
