@@ -4,7 +4,7 @@ import os
 from models import db, User, Task, Note, init_db
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, origins=["https://vindexinsanctirex.github.io", "http://localhost:5173"])
 
 # Configuração do banco de dados SQLite
 # O database.db está na raiz do projeto, então precisamos subir um nível
