@@ -1,3 +1,0 @@
-# Ignore frontend .github directory (workflows should only be at root)
-frontend/.github/
-

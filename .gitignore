@@ -1,25 +1,3 @@
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-env/
-venv/
-ENV/
-.venv
-
-# Node
-node_modules/
-dist/
-dist-ssr/
-*.local
-
-# Database
-*.db
-*.sqlite
-*.sqlite3
-
 # Logs
 logs
 *.log
@@ -27,6 +5,12 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
 
 # Editor directories and files
 .vscode/*
@@ -38,11 +22,3 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
-
-# OS
-Thumbs.db
-.DS_Store
-
-# GitHub workflows (only at root level)
-frontend/.github/
-
