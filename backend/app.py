@@ -1,10 +1,15 @@
 from flask import Flask, request, jsonify
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 import os
 from models import db, User, Task, Note, init_db
 
 app = Flask(__name__)
-CORS(app, origins=["https://vindexinsanctirex.github.io", "http://localhost:5173"])
+# Enhanced CORS configuration
+CORS(app, 
+     origins=["https://vindexinsanctirex.github.io", "http://localhost:5173"],
+     supports_credentials=True,
+     methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+     allow_headers=["Content-Type", "Authorization"])
 
 # Configuração do banco de dados SQLite
 # O database.db está na raiz do projeto, então precisamos subir um nível
@@ -23,8 +28,11 @@ init_db(app)
 def index():
     return {'status': 'API Infinity School rodando!'}
 
-@app.route('/login', methods=['POST'])
+@app.route('/login', methods=['POST', 'OPTIONS'])
+@cross_origin()  # Add this decorator
 def login():
+    if request.method == 'OPTIONS':
+        return '', 200
     data = request.json
     cpf = data.get('cpf')
     email = data.get('email')
@@ -42,8 +50,11 @@ def login():
     else:
         return jsonify({'error': 'Usuário não encontrado ou dados inválidos'}), 401
 
-@app.route('/tasks', methods=['GET', 'POST'])
+@app.route('/tasks', methods=['GET', 'POST', 'OPTIONS'])
+@cross_origin()  # Add this decorator
 def tasks():
+    if request.method == 'OPTIONS':
+        return '', 200
     if request.method == 'POST':
         data = request.json
         task = Task(
@@ -61,8 +72,11 @@ def tasks():
         tasks = Task.query.filter_by(user_id=user_id).all()
         return jsonify([task.to_dict() for task in tasks])
 
-@app.route('/tasks/<int:task_id>', methods=['PUT', 'DELETE'])
+@app.route('/tasks/<int:task_id>', methods=['PUT', 'DELETE', 'OPTIONS'])
+@cross_origin()  # Add this decorator
 def task_detail(task_id):
+    if request.method == 'OPTIONS':
+        return '', 200
     task = Task.query.get_or_404(task_id)
     
     if request.method == 'PUT':
@@ -78,8 +92,11 @@ def task_detail(task_id):
         db.session.commit()
         return jsonify({'status': 'deleted'})
 
-@app.route('/notes', methods=['GET', 'POST'])
+@app.route('/notes', methods=['GET', 'POST', 'OPTIONS'])
+@cross_origin()  # Add this decorator
 def notes():
+    if request.method == 'OPTIONS':
+        return '', 200
     if request.method == 'POST':
         data = request.json
         note = Note(
@@ -95,8 +112,11 @@ def notes():
         notes = Note.query.filter_by(user_id=user_id).all()
         return jsonify([note.to_dict() for note in notes])
 
-@app.route('/notes/<int:note_id>', methods=['PUT', 'DELETE'])
+@app.route('/notes/<int:note_id>', methods=['PUT', 'DELETE', 'OPTIONS'])
+@cross_origin()  # Add this decorator
 def note_detail(note_id):
+    if request.method == 'OPTIONS':
+        return '', 200
     note = Note.query.get_or_404(note_id)
     
     if request.method == 'PUT':
@@ -110,8 +130,11 @@ def note_detail(note_id):
         db.session.commit()
         return jsonify({'status': 'deleted'})
 
-@app.route('/user/<int:user_id>', methods=['GET', 'PUT'])
+@app.route('/user/<int:user_id>', methods=['GET', 'PUT', 'OPTIONS'])
+@cross_origin()  # Add this decorator
 def user_profile(user_id):
+    if request.method == 'OPTIONS':
+        return '', 200
     user = User.query.get_or_404(user_id)
     
     if request.method == 'GET':
