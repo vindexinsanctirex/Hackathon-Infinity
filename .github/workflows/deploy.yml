@@ -27,8 +27,12 @@ jobs:
           
       - name: Install dependencies
         working-directory: ./frontend
-        run: npm install
-        
+        run: |
+          npm install
+          # Install missing dependencies that your app uses
+          npm install date-fns
+          # Add any other missing dependencies here if needed
+          
       - name: Build
         working-directory: ./frontend
         run: |
