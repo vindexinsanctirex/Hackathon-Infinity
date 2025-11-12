@@ -16,15 +16,10 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: '18'
-        cache: 'npm'  # This will handle the lock file issue
+        # No cache setting to avoid lock file requirement
         
     - name: Install dependencies
-      run: |
-        # Generate package-lock.json if it doesn't exist
-        if [ ! -f package-lock.json ]; then
-          npm install --package-lock-only
-        fi
-        npm install
+      run: npm install --no-package-lock
       
     - name: Build
       run: |
