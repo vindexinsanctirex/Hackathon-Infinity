@@ -13,9 +13,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          
+        
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -25,12 +23,16 @@ jobs:
         working-directory: ./frontend
         run: npm install
         
-      - name: Deploy
+      - name: Build
         working-directory: ./frontend
         run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          npm run deploy
+          VITE_API_URL=https://hackathon-infinity-backend.onrender.com npm run build
         env:
           VITE_API_URL: https://hackathon-infinity-backend.onrender.com
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./frontend/dist
+          force_orphan: true  # Keeps only the latest deployment
