@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+      - master
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -18,8 +20,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -28,15 +32,27 @@ jobs:
           cache: 'npm'
           cache-dependency-path: frontend/package-lock.json
 
+      - name: Verify frontend directory exists
+        run: |
+          if [ ! -d "frontend" ]; then
+            echo "Error: frontend directory not found"
+            exit 1
+          fi
+          ls -la frontend/
+
       - name: Install dependencies
         working-directory: ./frontend
-        run: npm ci
+        run: |
+          npm ci --legacy-peer-deps || npm install
 
       - name: Build
         working-directory: ./frontend
         env:
-          VITE_API_URL: ${{ secrets.VITE_API_URL }}
-        run: npm run build
+          VITE_API_URL: ${{ secrets.VITE_API_URL || 'http://127.0.0.1:5000' }}
+        run: |
+          echo "Building with VITE_API_URL: $VITE_API_URL"
+          npm run build
+          ls -la dist/
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
